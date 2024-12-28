@@ -13,7 +13,10 @@ import { transformerCopyButton } from '@rehype-pretty/transformers'
 export default async function Page({ params }) {
     const slug = (await params).slug
     const filePath = `content/${slug}.md`
- 
+    if (!fs.existsSync(filePath)) {
+        notFound();
+        console.log("Page could not be found!")
+    }
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const { content, data } = matter(fileContent);
 
